@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 // using statements that are required to connect to EF DB
 using ASPLesson5.Models;
 using System.Web.ModelBinding;
+using System.Linq.Dynamic;
 
 namespace ASPLesson5
 {
@@ -17,7 +18,10 @@ namespace ASPLesson5
         {
             // if loading the page for the first time, populate the student grid
             if (!IsPostBack)
-            {
+            { 
+                Session["SortColumn"] = "StudentID"; //Default sort column
+                Session["SortDirection"] = "ASC";
+
                 // Get the student data
                 this.GetStudents();
             }
@@ -36,12 +40,14 @@ namespace ASPLesson5
             // connect to EF
             using (DefaultConnection db = new DefaultConnection())
             {
+                string SortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
+                
                 // query the Students Table using EF and LINQ
                 var Students = (from allStudents in db.Students
                                 select allStudents);
 
                 // bind the result to the GridView
-                StudentsGridView.DataSource = Students.ToList();
+                StudentsGridView.DataSource = Students.AsQueryable().OrderBy(SortString).ToList();
                 StudentsGridView.DataBind();
             }
         }
@@ -84,7 +90,7 @@ namespace ASPLesson5
         }
 
         /// <summary>
-        /// This Event Handler allows pagination to occur for the Students page        ///
+        /// This Event Handler allows pagination to occur for the Students page
         /// </summary>
         /// 
         /// @method StudentsGridView_PageIndexChanging
@@ -98,6 +104,77 @@ namespace ASPLesson5
 
             //Refresh the grid
             this.GetStudents();
+        }
+
+        /// <summary>
+        /// This Event Handler allows groups of 3, 5, an 10 items per page
+        /// </summary>
+        /// 
+        /// @method PageSizeDropDownList_SelectedIndexChanged
+        /// @param (object) sender
+        /// @params(EventArgs) e
+        /// @returns void
+        protected void PageSizeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Set the new page size
+            StudentsGridView.PageSize = Convert.ToInt32(PageSizeDropDownList.SelectedValue);
+
+            //Refresh the grid
+            this.GetStudents();
+        }
+
+        /// <summary>
+        /// This Event Handler toggles the sorting of the grid view
+        /// </summary>
+        /// 
+        /// @method StudentsGridView_Sorting
+        /// @param (object) sender
+        /// @params(GridViewSortEventArgs) e
+        /// @returns void
+        protected void StudentsGridView_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            //Get the colunm to sort by
+            Session["SortColumn"] = e.SortExpression;
+
+            //refresh the grid
+            this.GetStudents();
+
+            //Toggle the direction
+            Session["SortDirection"] = Session["SortDirection"].ToString() == "ASC" ? "DESC" : "ASC";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// 
+        protected void StudentsGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if(IsPostBack)
+            {
+                if (e.Row.RowType == DataControlRowType.Header) //if header row has been clicked
+                {
+                    LinkButton linkButton = new LinkButton();
+
+                    for(int index = 0; index < StudentsGridView.Columns.Count; index++)
+                    {
+                        if(StudentsGridView.Columns[index].SortExpression == Session["SortColumn"].ToString())
+                        {
+                            if(Session["SortDirection"].ToString() == "ASC")
+                            {
+                                linkButton.Text = " <i class = 'fa fa-caret-up fa-lg'></i>";
+                            }
+                            else
+                            {
+                                linkButton.Text = " <i class = 'fa fa-caret-down fa-lg'></i>";
+                            }
+
+                            e.Row.Cells[index].Controls.Add(linkButton);
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }
