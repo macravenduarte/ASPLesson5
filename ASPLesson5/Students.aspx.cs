@@ -27,14 +27,13 @@ namespace ASPLesson5
             }
         }
 
-        /**
-         * <summary>
-         * This method gets the student data from the DB
-         * </summary>
-         * 
-         * @method GetStudents
-         * @returns {void}
-         */
+        // <summary>
+        // This method gets the student data from the DB
+        // </summary>
+        // 
+        // @method GetStudents
+        // @returns {void}
+        //
         protected void GetStudents()
         {
             // connect to EF
@@ -63,7 +62,7 @@ namespace ASPLesson5
         /// 
         protected void StudentsGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            //Stre whish row was clicked
+            //Store which row was selected for deletion
             int selectedRow = e.RowIndex;
 
             //Get the selected StudentID using the Grid's DataKEy collection
@@ -131,6 +130,7 @@ namespace ASPLesson5
         /// @param (object) sender
         /// @params(GridViewSortEventArgs) e
         /// @returns void
+        /// 
         protected void StudentsGridView_Sorting(object sender, GridViewSortEventArgs e)
         {
             //Get the colunm to sort by
