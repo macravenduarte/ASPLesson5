@@ -40,10 +40,10 @@ namespace ASPLesson5
             using (DefaultConnection db = new DefaultConnection())
             {
                 string SortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
-                
+
                 // query the Students Table using EF and LINQ
                 var Departments = (from allDepartments in db.Departments
-                                select allDepartments);
+                                   select allDepartments);
 
                 // bind the result to the GridView
                 DepartmentsGridView.DataSource = Departments.AsQueryable().OrderBy(SortString).ToList();
