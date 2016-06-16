@@ -5,16 +5,12 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="form-group">
-                    <label>Department ID</label>
-                    <asp:TextBox CssClass="form-control" ID="DepartmentIDTextbox" runat="server" required="true"/>
-                </div>
-                <div class="form-group">
                     <label>Department Name</label>
-                    <asp:TextBox CssClass="form-control" ID="DeptartmentNameTextbox" runat="server"  required="true" />
+                    <asp:TextBox CssClass="form-control" ID="DeptartmentNameTextbox" runat="server" required="true"></asp:TextBox>
                 </div>
                 <div class="form-group">
                     <label>Department Budget</label>
-                    <asp:TextBox CssClass="form-control" ID="DeptartmentBudgetTextbox" runat="server" required="true" />
+                    <asp:TextBox CssClass="form-control" ID="DeptartmentBudgetTextbox" runat="server" required="true"></asp:TextBox>
                 </div>
                 <div class="form-group">
                     <asp:Button CssClass="btn btn-danger btn-lg" Text="Cancel" ID="CancelButton" runat="server"

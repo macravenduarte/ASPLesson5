@@ -39,14 +39,16 @@ namespace ASPLesson5
             // connect to EF
             using (DefaultConnection db = new DefaultConnection())
             {
-                string SortString = Session["SortColumn"].ToString() + " " + Session["SortDirection"].ToString();
+                string SortString = Session["SortColumn"].ToString() +
+                    " " + Session["SortDirection"].ToString();
                 
                 // query the Students Table using EF and LINQ
                 var Students = (from allStudents in db.Students
                                 select allStudents);
 
                 // bind the result to the GridView
-                StudentsGridView.DataSource = Students.AsQueryable().OrderBy(SortString).ToList();
+                StudentsGridView.DataSource = 
+                    Students.AsQueryable().OrderBy(SortString).ToList();
                 StudentsGridView.DataBind();
             }
         }

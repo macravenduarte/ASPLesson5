@@ -32,8 +32,8 @@ namespace ASPLesson5
 
                 if (updatedDepartment != null)
                 {
-                   DepartmentIDTextbox.Text = updatedDepartment.DepartmentID.ToString();
-                   DeptartmentNameTextbox.Text = updatedDepartment.Name;
+                  // DepartmentIDTextbox.Text = updatedDepartment.DepartmentID.ToString();
+                   DeptartmentNameTextbox.Text = updatedDepartment.DepartmentName;
                    DeptartmentBudgetTextbox.Text = updatedDepartment.Budget.ToString();
                 }
             }
@@ -51,7 +51,7 @@ namespace ASPLesson5
             {
                 var newDepartment = new Department();
 
-                newDepartment.Name = DeptartmentNameTextbox.Text;
+                newDepartment.DepartmentName = DeptartmentNameTextbox.Text;
                 newDepartment.Budget = Convert.ToDecimal(DeptartmentBudgetTextbox.Text);
 
                 db.Departments.Add(newDepartment);

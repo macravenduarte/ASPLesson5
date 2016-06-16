@@ -21,8 +21,8 @@ namespace ASPLesson5.Models
         }
     
         public int DepartmentID { get; set; }
-        public string Name { get; set; }
         public decimal Budget { get; set; }
+        public string DepartmentName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }
